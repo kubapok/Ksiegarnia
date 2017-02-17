@@ -2,14 +2,19 @@
 
 {% block content %}
     <table id="myTable">
-   
+
 {% for author in authors %}
 	<tr>
 		<td><h1><a href="{% url 'author_detail' pk=author.id %}">{{ author.name }}</a></h1></td>
 	</tr>
 
- {% endfor %} 
+ {% endfor %}
 </table>
+
+
+
+
+
 
 <script>
 function myFunction() {
@@ -26,11 +31,9 @@ function myFunction() {
       } else {
         tr[i].style.display = "none";
       }
-    }       
+    }
   }
 }
 </script>
-        
+
 {% endblock content %}
-
-

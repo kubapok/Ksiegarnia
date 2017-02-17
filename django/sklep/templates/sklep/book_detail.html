@@ -1,9 +1,11 @@
 {% extends 'sklep/base.html' %}
-
+{% load static from staticfiles %}
 {% block content %}
     <div class="book">
         <h1>{{ book.title }}</h1>
-		<img src="{{book.graphics}}">
+
+
+		<img src="{% static url %}"   />
 		{% for author in authors %}
 		<div class="author"><br>{{ author }}</br></div>
 		{% endfor %}
@@ -13,4 +15,11 @@
 		<a href="{% url 'shop_detail'%}">{{ book.ebook}}</a>
 		<br><a href="{% url 'shop_detail'%}">{{ book.paper}}</a></br>
     </div>
+
+			<form method="link" action="{% url 'add_to_cart' book.id %}">
+				<button type="submit" class="btn btn-default btn-lg">
+  						<span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> Dodaj do koszyka
+				</button>
+			</form>
+
 {% endblock %}

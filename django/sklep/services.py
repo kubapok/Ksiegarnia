@@ -1,4 +1,8 @@
 import requests
+import os
+import shutil
+
+
 
 
 def getBooksList():
@@ -6,10 +10,18 @@ def getBooksList():
     return books
 
 def getBookCoverById(id):
-    cover = requsts.get('http://localhost:8080/bookcovers/'+id)
-    o = open('static/'+id+'.jpg','wb')
-    o.write(cover.content)
-    return o
+    url = id+'.jpg'
+    des = r"C:\Users\Kasia\Desktop\Ksiegarnia-master\django\static\media\\"
+    if os.path.isfile(des+url):
+        return id
+    else:
+        cover = requests.get('http://localhost:8080/bookcovers/'+id)
+        if cover == 0:
+            return id
+        else:
+            im = open(des+url,'wb')
+            im.write(cover.content)
+            return url
 
 def getBookById(id):
     books = requests.get('http://localhost:8080/books/' + id).json()
@@ -28,6 +40,14 @@ def getAuthorById(id):
     authors = requests.get('http://localhost:8080/authors/' + id).json()
     return authors
 
+def getCustomerById(id):
+	customers = requests.get('http://localhost:8080/customers/' + id).json()
+	return customers	
+	
+def getCustomersById(id):
+	customers = requests.get('http://localhost:8080/customers/').json()
+	return customers
+	
 def postBook(data):
     return requests.post('http://localhost:8080/books/',data)
 

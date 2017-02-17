@@ -3,7 +3,6 @@
 <script type="text/javascript">{% javascript_settings %}</script>
 <html>
 
-
     <head>
         <title>Księgarnia </title>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -12,8 +11,11 @@
         <link rel="stylesheet" href="{% static 'css/sklep.css' %}">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+		<script src="{% static "js/jquery.min.js" %}"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="{% static "js/jquery.serialize-object.min.js" %}"></script>
+
+    </script>
 
 		{% load javascript_settings_tags %}
 		<script type="text/javascript">{% javascript_settings %}</script>
@@ -59,11 +61,17 @@
 
 					</form>
 
+					{% if request.session.username %}
+						Czesc, {{ request.session.first_name }}!
+					{% else %}
+						Witaj nieznajomy, zaloguj sie!
+					{% endif %}
+
 					<ul class="nav navbar-nav navbar-right">
 						<li class="">
-							<a href="{% url 'cart'%}">
-								<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
-								Koszyk
+							<a href="{% url 'add_author'%}">
+								<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+								Dodaj autora
 							</a>
 						</li>
 					</ul>
@@ -76,6 +84,40 @@
 							</a>
 						</li>
 					</ul>
+					<ul class="nav navbar-nav navbar-right">
+						<li class="">
+									{% if request.session.username %}
+										<a href="{% url 'logout_user'%}">
+										<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+										Wyloguj się
+									{% else %}
+										<a href="{% url 'login_user'%}">
+										<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+										Zaloguj się
+									{% endif %}
+							</a>
+						</li>
+					</ul>
+                    {% if request.session.username %}
+                    <ul class="nav navbar-nav navbar-right">
+						<li class="">
+								<a href="{% url 'new_cart'%}">
+								<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+								Koszyk
+							</a>
+						</li>
+					</ul>
+                    <ul class="nav navbar-nav navbar-right">
+						<li class="">
+								<a href="{% url 'mybooks'%}">
+								<span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+								Moje książki
+							</a>
+						</li>
+					</ul>
+                    {% endif %}
+
+
 
 				</div>
 
@@ -94,7 +136,7 @@
             </div>
         </div>
     </div>
-	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
 </html>
